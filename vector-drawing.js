@@ -17,7 +17,7 @@ let numVerts = 3; // initialize to 3 since we start with a triangle
 // Global for the number of vertices since last mode change
 let numVertsSinceChange = 3; // initialize to 3 since we start with a triangle
 
-// Once the document is fully loaded run this init function.
+// Once the document is fully loaded this init function is run
 window.addEventListener('load', function init() {
 	// Get the HTML5 canvas object from it's ID
 	const canvas = document.getElementById('gl-canvas');
