@@ -1,21 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <!-- Give the page a title - make sure it is descriptive! -->
-        <title>WebGL Example</title>
+        <title>Vector Drawing</title>
 
         <!-- Load utilities and functions -->
         <script src="common/webgl-utils.js"></script>
         <script src="common/MV.js"></script>
         <script src="common/init-shaders.js"></script>
 
-        <!-- Load the code for this example -->
+        <!-- Load the code -->
         <script src="vector-drawing.js"></script>
     </head>
-    <body>
+    <body style="padding:0;margin:0;">
         <!-- Define the canvas to use for the WebGL example -->
-        <canvas id="gl-canvas" width="400" height="400">
-            Your browser doesn't support HTML5 canvas element
-        </canvas>
-    </body>
+        <div>
+          <canvas id="gl-canvas" width="400" height="400">
+              Your browser doesn't support HTML5 canvas element
+          </canvas>
+        </div>
+        <div style="position:absolute;left:0;bottom:0;">
+          Drawing Mode:
+          <select id="drawingModes">
+            <option value="0" selected>Points</option>
+            <option value="1">Lines</option>
+            <option value="3">Line Strip</option>
+            <option value="2">Line Loop</option>
+            <option value="4">Triangles</option>
+            <option value="5">Triangle Strip</option>
+            <option value="6">Triangle Fan</option>
+          </select>
+          <table>
+            <tr>
+              <td align="right" colspan="2">Red:</td>
+              <td>0</td>
+              <td><input type="range" min=0 max=255 value=255 step="1" id="redSlider"></td>
+              <td>255</td>
+            </tr>
+            <tr>
+              <td align="right" colspan="2">Green:</td>
+              <td>0</td>
+              <td><input type="range" min=0 max=255 value=0 step="1" id="greenSlider"></td>
+              <td>255</td>
+            </tr>
+            <tr>
+              <td align="right" colspan="2">Blue:</td>
+              <td>0</td>
+              <td><input type="range" min=0 max=255 value=0 step="1" id="blueSlider"></td>
+              <td>255</td>
+            </tr>
+          </table>
+          <input type="button" value="Random Color" id="random">
+          <input type="button" value="Reset Canvas" id="reset">
+        </div>
+      </body>
 </html>
