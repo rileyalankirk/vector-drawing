@@ -7,9 +7,11 @@ let savedObjects = [];
 
 let verts = [];   // Global for vertex vectors
 let colors = [];  // Global for color vectors
+let colBefClose;  // Global for the color before the input menu closes
 let	vertexBuffer; // Global for vertex buffer
 let	colorBuffer;  // Global for color buffer
 let mode; 	      // Global for current mode
+let menuOpen = 1; // Global for whether the input menu is open or not (0 or 1)
 
 // Global for the number of vertices
 let numVerts = 3; // initialize to 3 since we start with a triangle
@@ -87,6 +89,7 @@ window.addEventListener('load', function init() {
 	document.getElementById("drawingModes").addEventListener("change", modeChanged);
 	document.getElementById("random").addEventListener("click", randomizeColor);
 	document.getElementById("reset").addEventListener("click", resetCanvas);
+	document.getElementById("close_input").addEventListener("click", onClose);
 
 	// Set the initial mode
 	mode = gl.POINTS;
@@ -199,6 +202,9 @@ function colorChanged() { // changes the current color and calls render
 }
 
 function getColor() { // returns the current color
+	if (menuOpen === 0) {
+		return colBefClose;
+	}
 	let curColor = vec4(1,0,0,1);
 	curColor[0] = document.getElementById("redSlider").value / 255.0;
 	curColor[1] = document.getElementById("greenSlider").value / 255.0;
@@ -239,4 +245,33 @@ function resetCanvas() {
 
 	// Resets the triangle's color, also calls render
 	colorChanged();
+}
+
+function onClose() {
+	colBefClose = getColor();
+	menuOpen = 0;
+	document.getElementById("close_input").removeEventListener("click", onClose);
+	document.getElementById('input').innerHTML = "<input type='button' value='>' id='open_input'>";
+	document.getElementById('open_input').addEventListener("click", onOpen);
+}
+
+function onOpen() {
+	document.getElementById('input').innerHTML = "Drawing Mode:<select id='drawingModes'><option value='0' selected>Points</option><option value='1'>Lines</option><option value='3'>Line Strip</option><option value='2'>Line Loop</option><option value='4'>Triangles</option><option value='5'>Triangle Strip</option><option value='6'>Triangle Fan</option></select>&nbsp&nbsp&nbsp&nbsp&nbsp<input type='button' value='<' id='close_input'><table><tr><td align='right' colspan='2'>Red:</td><td>0</td><td><input type='range' min=0 max=255 value=255 step='1' id='redSlider'></td><td>255</td></tr><tr><td align='right' colspan='2'>Green:</td><td>0</td><td><input type='range' min=0 max=255 value=0 step='1' id='greenSlider'></td><td>255</td></tr><tr><td align='right' colspan='2'>Blue:</td><td>0</td><td><input type='range' min=0 max=255 value=0 step='1' id='blueSlider'></td><td>255</td></tr></table><input type='button' value='Random Color' id='random'><input type='button' value='Reset Canvas' id='reset'>";
+
+	// Set all of the input to it's correct values
+	document.getElementById("drawingModes").value = mode;
+	document.getElementById("redSlider").value = colBefClose[0]*255;
+	document.getElementById("greenSlider").value = colBefClose[1]*255;
+	document.getElementById("blueSlider").value = colBefClose[2]*255;
+
+	// Add back event listeners
+	document.getElementById("redSlider").addEventListener("change", colorChanged);
+	document.getElementById("greenSlider").addEventListener("change", colorChanged);
+	document.getElementById("blueSlider").addEventListener("change", colorChanged);
+	document.getElementById("drawingModes").addEventListener("change", modeChanged);
+	document.getElementById("random").addEventListener("click", randomizeColor);
+	document.getElementById("reset").addEventListener("click", resetCanvas);
+	document.getElementById("close_input").addEventListener("click", onClose);
+
+	menuOpen = 1;
 }

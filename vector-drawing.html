@@ -18,7 +18,7 @@
               Your browser doesn't support HTML5 canvas element
           </canvas>
         </div>
-        <div style="position:absolute;left:0;bottom:0;">
+        <div id="input" style="position:absolute;left:0;bottom:0;">
           Drawing Mode:
           <select id="drawingModes">
             <option value="0" selected>Points</option>
@@ -29,6 +29,7 @@
             <option value="5">Triangle Strip</option>
             <option value="6">Triangle Fan</option>
           </select>
+          &nbsp&nbsp&nbsp&nbsp&nbsp<input type="button" value="<" id="close_input">
           <table>
             <tr>
               <td align="right" colspan="2">Red:</td>
